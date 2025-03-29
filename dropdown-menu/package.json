@@ -1,0 +1,11 @@
+{
+  "name": "@muahchee/dropdown-menu",
+  "version": "1.0.1",
+  "description": "simple dropdown menu",
+  "main": "dropdownMenu.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "muahchee",
+  "license": "ISC"
+}
