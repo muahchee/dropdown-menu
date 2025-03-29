@@ -1,3 +1,7 @@
-import { test } from "./test.js";
+const DropdownMenu = require("dropdown-menu");
 
-console.log(test);
+const button1 = document.querySelector("button");
+
+const menu1 = document.querySelector("div");
+
+new DropdownMenu(button1, menu1).create();
