@@ -35,6 +35,8 @@ class ImageCarousel {
 
     this.slideContainer.parentElement.style.overflow = "hidden";
 
+    this.slideArr.forEach(img => img.style.width = `${this.frameWidth}px`)
+
     this.previousButton = document.createElement("button");
     this.previousButton.className = "previous-btn";
     this.previousButton.style.position = "absolute";
@@ -71,9 +73,19 @@ class ImageCarousel {
     for (let i = 1; i < this.slideArr.length + 1; i++){
       const singleNavCircle = document.createElement("img");
       singleNavCircle.src = blankCircle;
+      singleNavCircle.style.width = "10px";
       singleNavCircle.setAttribute("slidecircle", i)
       this.navCircles.appendChild(singleNavCircle)
     }
+  }
+
+  _syncNavCircle() {
+    //reset circles
+    this.navCircles.childNodes.forEach((circle) => {
+      circle.src = blankCircle;
+    })
+    const currentCircle = this.navCircles.querySelector(`[slidecircle = "${this.currentSlide}"]`);
+    currentCircle.src = filledCircle;
   }
 
   _numberSlides() {
@@ -119,11 +131,13 @@ class ImageCarousel {
       this.slideContainer.style.transform = `translateX(${-this.frameWidth + xValue}px)`;
       this.currentSlide += 1;
       this._hideImg();
+      this._syncNavCircle();
       return this.slideContainer;
     }
 
     this.currentSlide = 1;
     this._hideImg();
+    this._syncNavCircle();
     this.slideContainer.style.transform = `translateX(0)`;
   }
 
@@ -134,11 +148,13 @@ class ImageCarousel {
       this.slideContainer.style.transform = `translateX(${this.frameWidth + xValue}px)`;
       this.currentSlide -= 1;
       this._hideImg();
+      this._syncNavCircle();
       return this.slideContainer;
     }
 
     this.currentSlide = this.slides.length;
     this._hideImg();
+    this._syncNavCircle();
     this.slideContainer.style.transform = `translateX(${-this.frameWidth * (this.currentSlide - 1)}px)`;
   }
 
@@ -147,6 +163,7 @@ class ImageCarousel {
     this._numberSlides();
     this._hideImg();
     this._createNavCircles();
+    this._syncNavCircle();
 
     this.nextButton.addEventListener("click", () => {
       this._next();
@@ -155,6 +172,8 @@ class ImageCarousel {
     this.previousButton.addEventListener("click", () => {
       this._previous();
     });
+
+    console.log(this.navCircles.childNodes)
   }
 }
 
