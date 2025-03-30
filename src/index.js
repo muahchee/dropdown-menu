@@ -35,7 +35,7 @@ class ImageCarousel {
 
     this.slideContainer.parentElement.style.overflow = "hidden";
 
-    this.slideArr.forEach(img => img.style.width = `${this.frameWidth}px`)
+    this.slideArr.forEach((img) => (img.style.width = `${this.frameWidth}px`));
 
     this.previousButton = document.createElement("button");
     this.previousButton.className = "previous-btn";
@@ -61,6 +61,9 @@ class ImageCarousel {
 
     this.navCircles = document.createElement("div");
     this.navCircles.className = "nav-circles";
+    this.navCircles.style.position = "absolute";
+    this.navCircles.style.bottom = "-30px";
+    this.navCircles.style.justifySelf = "center";
 
     this.nextButton.appendChild(this.nextButtonImg);
 
@@ -68,14 +71,27 @@ class ImageCarousel {
     this.frame.appendChild(this.nextButton);
     this.frame.appendChild(this.navCircles);
   }
+  _jumpToSlide(currentCircle) {
+    const currentCircleNumber = currentCircle.getAttribute("slidecircle");
+    const targetSlideXValue = -(this.frameWidth * (currentCircleNumber - 1));
+    this.slideContainer.style.transform = `translateX(${targetSlideXValue}px)`;
+    this.currentSlide = Number(currentCircleNumber);
+    console.log(currentCircleNumber); 
+    console.log(this.currentSlide); 
+    this._hideImg();
+    this._syncNavCircle();
+  }
 
   _createNavCircles() {
-    for (let i = 1; i < this.slideArr.length + 1; i++){
+    for (let i = 1; i < this.slideArr.length + 1; i++) {
       const singleNavCircle = document.createElement("img");
       singleNavCircle.src = blankCircle;
       singleNavCircle.style.width = "10px";
-      singleNavCircle.setAttribute("slidecircle", i)
-      this.navCircles.appendChild(singleNavCircle)
+      singleNavCircle.setAttribute("slidecircle", i);
+      singleNavCircle.addEventListener("click", () => {
+        this._jumpToSlide(singleNavCircle);
+      });
+      this.navCircles.appendChild(singleNavCircle);
     }
   }
 
@@ -83,8 +99,10 @@ class ImageCarousel {
     //reset circles
     this.navCircles.childNodes.forEach((circle) => {
       circle.src = blankCircle;
-    })
-    const currentCircle = this.navCircles.querySelector(`[slidecircle = "${this.currentSlide}"]`);
+    });
+    const currentCircle = this.navCircles.querySelector(
+      `[slidecircle = "${this.currentSlide}"]`,
+    );
     currentCircle.src = filledCircle;
   }
 
@@ -132,12 +150,14 @@ class ImageCarousel {
       this.currentSlide += 1;
       this._hideImg();
       this._syncNavCircle();
+      console.log(this.currentSlide + " " + this._getCurrentTranslateXValue());
       return this.slideContainer;
     }
 
     this.currentSlide = 1;
     this._hideImg();
     this._syncNavCircle();
+    console.log(this.currentSlide + " " + this._getCurrentTranslateXValue());
     this.slideContainer.style.transform = `translateX(0)`;
   }
 
@@ -173,7 +193,7 @@ class ImageCarousel {
       this._previous();
     });
 
-    console.log(this.navCircles.childNodes)
+    console.log(this.navCircles.childNodes);
   }
 }
 
