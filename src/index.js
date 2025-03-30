@@ -23,8 +23,11 @@ class ImageCarousel {
 
     this.slideContainer.style.display = "flex";
     this.slideContainer.style.alignItems = "center";
+    this.slideContainer.style.width = `${this.frameWidth}px`
     this.slideContainer.style.overflow = "none";
     this.slideContainer.style.transform = `translateX(0)`;
+
+    this.slideContainer.parentElement.style.overflow = "hidden"
 
     this.previousButton = document.createElement("button");
     this.previousButton.textContent = "←";
