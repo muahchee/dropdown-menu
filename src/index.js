@@ -24,16 +24,19 @@ class ImageCarousel {
     this.slideContainer.style.display = "flex";
     this.slideContainer.style.alignItems = "center";
     this.slideContainer.style.overflow = "none";
+    this.slideContainer.style.transform = `translateX(0)`;
 
     this.previousButton = document.createElement("button");
     this.previousButton.textContent = "←";
-    this.previousButton.style.position = "absolute";
+    (this.previousButton.className = "previous-btn"),
+      (this.previousButton.style.position = "absolute");
     this.previousButton.style.left = "-15%";
     this.previousButton.style.top = "50%";
 
     this.nextButton = document.createElement("button");
     this.nextButton.textContent = "→";
-    this.nextButton.style.position = "absolute";
+    (this.nextButton.className = "next-btn"),
+      (this.nextButton.style.position = "absolute");
     this.nextButton.style.right = "-15%";
     this.nextButton.style.top = "50%";
 
@@ -64,20 +67,47 @@ class ImageCarousel {
     });
   }
 
-  _next() {
-    if (this.currentSlide < this.slides.length) {
-      this.slideContainer.style.transform = `translateX(-${this.frameWidth * this.currentSlide}px)`;
+  _getCurrentTranslateXValue() {
+    const slideContainerStyle = window.getComputedStyle(this.slideContainer);
+    const currentTransformMatrix =
+      slideContainerStyle.getPropertyValue("transform");
+    const matrixValues = currentTransformMatrix
+      .match(/matrix.*\((.+)\)/)[1]
+      .split(", ");
 
+    const translateXValue = matrixValues[4];
+
+    return Number(translateXValue);
+  }
+
+  _next() {
+    const xValue = this._getCurrentTranslateXValue();
+
+    if (this.currentSlide < this.slides.length) {
+      this.slideContainer.style.transform = `translateX(${-this.frameWidth + xValue}px)`;
       this.currentSlide += 1;
-      this._hideImg()
-      console.log(this.currentSlide);
+      this._hideImg();
       return this.slideContainer;
     }
 
     this.currentSlide = 1;
-    this._hideImg()
+    this._hideImg();
     this.slideContainer.style.transform = `translateX(0)`;
-    console.log(this.currentSlide);
+  }
+
+  _previous() {
+    const xValue = this._getCurrentTranslateXValue();
+
+    if (this.currentSlide > 1) {
+      this.slideContainer.style.transform = `translateX(${this.frameWidth + xValue}px)`;
+      this.currentSlide -= 1;
+      this._hideImg();
+      return this.slideContainer;
+    }
+
+    this.currentSlide = this.slides.length;
+    this._hideImg();
+    this.slideContainer.style.transform = `translateX(${-this.frameWidth * (this.currentSlide - 1)}px)`;
   }
 
   create() {
@@ -89,7 +119,9 @@ class ImageCarousel {
       this._next();
     });
 
-    
+    this.previousButton.addEventListener("click", () => {
+      this._previous();
+    });
   }
 }
 
