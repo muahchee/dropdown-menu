@@ -7,12 +7,20 @@ import blankCircle from "./carousel-images/blank-circle.svg";
 import filledCircle from "./carousel-images/filled-circle.svg";
 
 class ImageCarousel {
-  constructor(frame, slideContainer, frameWidth) {
+  constructor(
+    frame,
+    slideContainer,
+    frameWidth,
+    wantSlideshow = true,
+    slideshowTimer = 2300,
+  ) {
     this.frame = frame;
     this.slideContainer = slideContainer;
     this.slides = this.slideContainer.children;
     this.frameWidth = frameWidth;
     this.currentSlide = 1;
+    this.wantSlideshow = wantSlideshow;
+    this.slideshowTimer = slideshowTimer;
 
     this.slideArr = [];
     this.slideContainer.childNodes.forEach((slide) => {
@@ -76,8 +84,8 @@ class ImageCarousel {
     const targetSlideXValue = -(this.frameWidth * (currentCircleNumber - 1));
     this.slideContainer.style.transform = `translateX(${targetSlideXValue}px)`;
     this.currentSlide = Number(currentCircleNumber);
-    console.log(currentCircleNumber); 
-    console.log(this.currentSlide); 
+    console.log(currentCircleNumber);
+    console.log(this.currentSlide);
     this._hideImg();
     this._syncNavCircle();
   }
@@ -193,7 +201,11 @@ class ImageCarousel {
       this._previous();
     });
 
-    console.log(this.navCircles.childNodes);
+    if (this.wantSlideshow === true) {
+      setInterval(() => {
+        this._next();
+      }, this.slideshowTimer);
+    }
   }
 }
 
