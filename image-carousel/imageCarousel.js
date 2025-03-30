@@ -12,7 +12,7 @@ const filledCircle = new URL(
   import.meta.url,
 );
 
-export class ImageCarousel {
+exports.ImageCarousel = class ImageCarousel {
   constructor(
     frame,
     slideContainer,
@@ -210,3 +210,4 @@ export class ImageCarousel {
     }
   }
 }
+
