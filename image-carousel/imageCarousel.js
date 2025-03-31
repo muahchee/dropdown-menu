@@ -17,6 +17,7 @@ exports.ImageCarousel = class ImageCarousel {
     frame,
     slideContainer,
     frameWidth,
+    arrowDistance,
     wantSlideshow = true,
     slideshowTimerMs = 2300,
   ) {
@@ -24,6 +25,7 @@ exports.ImageCarousel = class ImageCarousel {
     this.slideContainer = slideContainer;
     this.slides = this.slideContainer.children;
     this.frameWidth = frameWidth;
+    this.arrowDistance = arrowDistance;
     this.currentSlide = 1;
     this.wantSlideshow = wantSlideshow;
     this.slideshowTimerMs = slideshowTimerMs;
@@ -54,7 +56,7 @@ exports.ImageCarousel = class ImageCarousel {
     this.previousButton = document.createElement("button");
     this.previousButton.className = "previous-btn";
     this.previousButton.style.position = "absolute";
-    this.previousButton.style.left = "-15%";
+    this.previousButton.style.left = `-${this.arrowDistance}%`;
     this.previousButton.style.top = "50%";
 
     this.previousButtonImg = document.createElement("img");
@@ -66,7 +68,7 @@ exports.ImageCarousel = class ImageCarousel {
     this.nextButton = document.createElement("button");
     this.nextButton.className = "next-btn";
     this.nextButton.style.position = "absolute";
-    this.nextButton.style.right = "-15%";
+    this.nextButton.style.right = `-${this.arrowDistance}%`;
     this.nextButton.style.top = "50%";
 
     this.nextButtonImg = document.createElement("img");
@@ -209,5 +211,4 @@ exports.ImageCarousel = class ImageCarousel {
       }, this.slideshowTimerMs);
     }
   }
-}
-
+};

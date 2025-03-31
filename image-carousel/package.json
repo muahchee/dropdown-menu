@@ -1,6 +1,6 @@
 {
   "name": "@muahchee/image-carousel",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "attach it to a div to create a slideshow",
   "main": "imageCarousel.js",
   "scripts": {
@@ -8,5 +8,5 @@
   },
   "author": "muahchee",
   "license": "ISC",
-  "types": "./imageCarousel.d.ts",
+  "types": "./imageCarousel.d.ts"
 }

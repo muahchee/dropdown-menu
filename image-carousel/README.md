@@ -28,15 +28,16 @@ put images in slide-container
 ```
 import { ImageCarousel } from "@muahchee/image-carousel"
 
-new ImageCarousel(frame, slideContainer, frameWidth, wantSlideshow, slideshowTimerMs).create();
+new ImageCarousel(frame, slideContainer, frameWidth, arrowDistance, wantSlideshow, slideshowTimerMs).create();
 
 ```
 
-- `frame` = div.frame
-- `slideContainer` = div.slide-container
+- `frame` = div.frame (querySelector)
+- `slideContainer` = div.slide-container (querySelector)
 - `frameWidth` = (px) image and frame width
-- `wantSlideshow` = (true/false) toggle slideshow
-- `slideshowTimerMs` = (number) how many milliseconds to change image. Doesnt do anything if wantSlideshow is false.
+- `arrowDistance` = (%) constrols how far away the next and previous arrow are from the left and right edge of the frame.
+- `wantSlideshow` = (true/false) toggle slideshow. Default is true
+- `slideshowTimerMs` = (number) controls how many milliseconds to change image. Doesnt do anything if wantSlideshow is false. Default is 2300.
 
 ### Customise buttons/circles
 
